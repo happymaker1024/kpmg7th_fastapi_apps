@@ -1,8 +1,6 @@
 from fastapi import Depends, FastAPI, Form, Request, status
-from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy.orm import Session
 
 from fastapi.responses import HTMLResponse, JSONResponse
 from langchain_openai import ChatOpenAI
@@ -10,8 +8,6 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
 from pydantic import BaseModel, Field
-
-from database import engine, SessionLocal, Base
 import os
 
 # API key 로딩
@@ -76,7 +72,9 @@ def home(request: Request):
 
 # 4.Job Description 생성 API
 @app.post("/generate")
-def generate_job_desc(job_role: str = Form(...), level: str = Form(...)):
+def generate_job_desc(request: Request,
+                      job_role: str = Form(...), 
+                      level: str = Form(...)):
     input_data = {
         "job_role": job_role,
         "level": level
@@ -84,4 +82,17 @@ def generate_job_desc(job_role: str = Form(...), level: str = Form(...)):
     print("요청시작")
     result = chain.invoke(input_data)
     print("요청완료")
-    return JSONResponse(content=result)
+
+    # 🔑 여기서 한글 유지
+    import json
+    result_json = json.dumps(result, ensure_ascii=False, indent=2)
+
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "result": result,
+            "job_role": job_role,
+            "level": level
+        }
+    )
