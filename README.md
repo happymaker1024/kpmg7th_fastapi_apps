@@ -25,4 +25,6 @@ pip install cryptography
 
 # AI 관련 라이브러리
 ```
+pip install python-dotenv
+pip install langchain langchain-openai
 ```
