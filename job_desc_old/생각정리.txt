@@ -1,0 +1,22 @@
+취준생을 위한 아래와 같은 fastapi + langchain 연동 서비스
+이 앱은 
+사용자가 직군과 숙련도를 입력하면
+LLM이 JSON 형태의 직무 설명서를 만들어주는 서비스입니다.
+
+FastAPI → 웹 API
+LangChain → LLM 파이프라인
+Prompt + Parser → 출력 통제
+
+
+- 입력 : 사용자들이 입력 내용
+직군(job_role)
+숙련도(level)
+
+
+- 출력 : json 형태
+직군명(job_role)
+숙련도 수준(level)
+핵심 기술 역량(core_skills)
+필수 도구 및 기술 스택(tools)
+비기술 역량(soft_skills)
+상세설명(description)

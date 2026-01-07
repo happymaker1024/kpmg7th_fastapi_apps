@@ -14,8 +14,17 @@ pip install fastapi
 pip install uvicorn
 - 파이썬에 html 작성 및 미디어 데이터 처리 관련
 pip install jinja2 python-multipart
+
+- db orm 라이브러리
+pip install sqlalchemy 
+
+- mysql 연결 라이브러리
+pip install pymysql
+pip install cryptography
 ```
 
 # AI 관련 라이브러리
 ```
+pip install python-dotenv
+pip install langchain langchain-openai
 ```
